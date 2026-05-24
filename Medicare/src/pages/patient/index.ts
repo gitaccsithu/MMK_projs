@@ -1,0 +1,12 @@
+/** Patient-facing route modules for MediCare+ */
+export { PatientDashboard } from './PatientDashboard'
+export { BookAppointmentPage } from './BookAppointmentPage'
+export { AppointmentsPage } from './AppointmentsPage'
+export { TeleconsultationPage } from './TeleconsultationPage'
+export { MessagesPage } from './MessagesPage'
+export { PrescriptionsPage } from './PrescriptionsPage'
+export { MedicalRecordsPage } from './MedicalRecordsPage'
+export { HealthMetricsPage } from './HealthMetricsPage'
+export { PatientProfilePage } from './PatientProfilePage'
+export { PatientNotificationsPage } from './PatientNotificationsPage'
+export { PatientSettingsPage } from './PatientSettingsPage'
