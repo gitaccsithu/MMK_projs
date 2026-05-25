@@ -1,0 +1,17 @@
+{
+  "name": "insightflow-ai",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n web,agent -c cyan,magenta \"npm run dev -w @insightflow/web\" \"npm run dev -w @insightflow/agent\"",
+    "build": "npm run build -w @insightflow/shared && npm run build -w @insightflow/agent && npm run build -w @insightflow/web",
+    "index": "npm run index -w @insightflow/agent"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
