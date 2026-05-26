@@ -4,7 +4,8 @@ import type { Citation } from '@insightflow/shared'
 import { createChatModel, defaultChatModel } from '../config/llm.js'
 import { buildPromptWithContext, DEFAULT_SYSTEM_PROMPT } from '../config/systemPrompt.js'
 import { ragTopK } from '../config/rag.js'
-import { getVectorStore } from './vectorStore.js'
+import { getVectorStoreReady } from './vectorStore.js'
+import { loadKnowledgeDocuments } from './loadDocuments.js'
 
 function formatContext(docs: Array<{ pageContent: string; metadata: Record<string, unknown> }>): string {
   return docs
@@ -47,9 +48,13 @@ export async function* streamRagChat(options: {
   | { type: 'done'; citations: Citation[]; model: string }
   | { type: 'error'; message: string }
 > {
-  const store = getVectorStore()
+  const store = await getVectorStoreReady(() => loadKnowledgeDocuments())
   if (!store) {
-    yield { type: 'error', message: 'Knowledge index is not loaded. Run ingestion first.' }
+    yield {
+      type: 'error',
+      message:
+        'Knowledge index is not loaded. Set OPENROUTER_API_KEY in AI/.env, run `npm run index`, then restart the agent.',
+    }
     return
   }
 
@@ -109,7 +114,7 @@ export async function* streamRagChat(options: {
 }
 
 export async function semanticSearch(query: string, limit = 8) {
-  const store = getVectorStore()
+  const store = await getVectorStoreReady(() => loadKnowledgeDocuments())
   if (!store) return []
   const results = await store.similaritySearch(query, limit)
   return results.map((doc: Document, i: number) => ({

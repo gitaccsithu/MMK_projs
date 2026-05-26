@@ -3,5 +3,3 @@ dist/
 .env
 *.local
 .DS_Store
-apps/agent/storage/vector-index.json
-apps/agent/storage/uploads/

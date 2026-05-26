@@ -128,3 +128,11 @@ export async function ensureIndexLoaded(
     }
   }
 }
+
+/** Load index from disk (or build) if the in-memory store was cleared (e.g. tsx hot reload). */
+export async function getVectorStoreReady(
+  loader: () => Promise<Document[]>,
+): Promise<InMemoryVectorStore | null> {
+  await ensureIndexLoaded(loader)
+  return vectorStore
+}

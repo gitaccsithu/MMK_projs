@@ -33,6 +33,17 @@ knowledge/   → Seed markdown company documents
 packages/shared → Shared TypeScript types
 ```
 
+### Where is the vector data?
+
+Vectors are **not** in `knowledge/` (that folder is plain markdown only).
+
+| Path | Contents |
+|------|----------|
+| `knowledge/*.md` | Source documents (human-readable) |
+| `apps/agent/storage/vector-index.json` | Chunk text + embedding arrays (~400KB JSON, **gitignored**) |
+
+The agent loads that JSON into **memory** on startup. If you do not see `vector-index.json` in the IDE, enable viewing ignored files or open the path above in Finder — it is listed in `.gitignore` so Git (and some editors) hide it by default.
+
 ### RAG pipeline
 
 1. Load markdown from `knowledge/`
